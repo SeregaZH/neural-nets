@@ -10,7 +10,10 @@ namespace Neural.Core
         private readonly Func<double, double> _threshold;
         private readonly IList<double> _weights;
 
-        public Perceptron(int inputCount, Func<double, double> inputNormalization, Func<double, double> threshold)
+        public Perceptron(
+            int inputCount, 
+            Func<double, double> inputNormalization, 
+            Func<double, double> threshold)
         {
             _inputNormalization = inputNormalization;
             _threshold = threshold;
@@ -37,12 +40,12 @@ namespace Neural.Core
                 .Aggregate(0.0, (accum, value) => accum + value, _threshold);
         }
 
-        public void Correct(double speed, short direction, IEnumerable<double> input)
+        public void Correct(Func<double> correctDeltaFn, IEnumerable<double> input)
         {
-            var inputVector = input.ToList();
+            var inputVector = input.ToArray();
             foreach (var index in Enumerable.Range(0, _weights.Count))
             {
-                _weights[index] += inputVector[index] * speed * direction;
+                _weights[index] = correctDeltaFn() * inputVector[index];
             }
         }
 

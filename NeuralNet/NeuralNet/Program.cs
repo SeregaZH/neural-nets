@@ -11,7 +11,7 @@ namespace NeuralNet
         public static void Main(string[] args)
         {
             //function 3x+2y-z  = 0
-            const double LearningSpeed = 0.1;
+            const double LearningSpeed = 0.01;
             var neuron = new Perceptron(3, x => x*0.01, t => t >= 0 ? 1 : 0);
             var samples = SampleReader.ReadSample();
 
@@ -28,8 +28,8 @@ namespace NeuralNet
 
                     while (result != sample.ExpectedResult)
                     {
-                        if (result > sample.ExpectedResult) neuron.Correct(LearningSpeed, -1, inputVector);
-                        else if (result < sample.ExpectedResult) neuron.Correct(LearningSpeed, 1, inputVector);
+                        if (result > sample.ExpectedResult) neuron.Correct(() => -LearningSpeed, inputVector);
+                        else if (result < sample.ExpectedResult) neuron.Correct(() => LearningSpeed, inputVector);
                         result = neuron.Compute(new double[] { sample.PointX, sample.PointY, sample.PointZ });
                     }
 
