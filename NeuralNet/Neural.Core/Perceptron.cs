@@ -42,10 +42,16 @@ namespace Neural.Core
 
         public void Correct(Func<double> correctDeltaFn, IEnumerable<double> input)
         {
-            var inputVector = input.ToArray();
+            var inputVector = input.ToList();
+
+            if (InputCount != inputVector.Count)
+            {
+                throw new ArgumentException("incorrect capacity of input arguments", nameof(input));
+            }
+
             foreach (var index in Enumerable.Range(0, _weights.Count))
             {
-                _weights[index] = correctDeltaFn() * inputVector[index];
+                _weights[index] += correctDeltaFn() * inputVector[index];
             }
         }
 
