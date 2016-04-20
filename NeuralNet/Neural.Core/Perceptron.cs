@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Neural.Core
 {
-    public class Perceptron
+    public class Perceptron : INeuron
     {
         private readonly Func<double, double> _inputNormalization;
         private readonly Func<double, double> _threshold;
@@ -56,6 +56,8 @@ namespace Neural.Core
         }
 
         public int InputCount { get; private set; }
+
+        public IEnumerable<double> Weights => _weights;
 
         private IList<double> InitializeWeight(int inputCount)
         {
