@@ -31,11 +31,23 @@ namespace Neural.Core.Learning
 
             int errorCount = 0;
 
-            foreach (var sample in samples)
+            do
             {
-                var result = neuron.Compute(sample.InputVector);
-                if (result != sample.ExpectedResult) errorCount++;
-            }
+                errorCount = 0;
+                foreach (var sample in samples)
+                {
+                    var result = neuron.Compute(sample.InputVector);
+                    if (result != sample.ExpectedResult)
+                    {
+                        errorCount++;
+                        var diviation = sample.ExpectedResult - result;
+                        neuron.Correct(() => diviation * _settings.LearningSpeed, sample.InputVector);
+                    };
+                }
+
+                _logger.Info(string.Format("Error count:{0}", errorCount));
+
+            } while (errorCount > Math.Ceiling(sampleCount * _settings.ErrorPercent));
 
             return neuron;
         }

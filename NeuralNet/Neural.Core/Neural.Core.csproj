@@ -48,7 +48,6 @@
     <Compile Include="Learning\ErrorDiviation.cs" />
     <Compile Include="Learning\ILearningAlgorithm.cs" />
     <Compile Include="Learning\SimpleLearning.cs" />
-    <Compile Include="Learning\SimpleLearningSettings.cs" />
     <Compile Include="PerceptronSettings.cs" />
     <Compile Include="Perceptron.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

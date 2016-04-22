@@ -8,16 +8,13 @@ namespace Neural.Core.Learning
     public class SimpleLearning : ILearningAlgorithm
     {
         private readonly PerceptronSettings _settings;
-        private readonly SimpleLearningSettings _learningSettings;
         private readonly ILog _logger;
  
         public SimpleLearning(
             PerceptronSettings settings,
-            SimpleLearningSettings learningSettings,
             ILog logger)
         {
             _settings = settings;
-            _learningSettings = learningSettings;
             _logger = logger;
         }
 
@@ -42,8 +39,8 @@ namespace Neural.Core.Learning
 
                     while (result != sample.ExpectedResult)
                     {
-                        if (result > sample.ExpectedResult) neuron.Correct(() => -_learningSettings.LearningSpeed, sample.InputVector);
-                        else if (result < sample.ExpectedResult) neuron.Correct(() => _learningSettings.LearningSpeed, sample.InputVector);
+                        if (result > sample.ExpectedResult) neuron.Correct(() => -_settings.LearningSpeed, sample.InputVector);
+                        else if (result < sample.ExpectedResult) neuron.Correct(() => _settings.LearningSpeed, sample.InputVector);
                         result = neuron.Compute(sample.InputVector);
                     }
                 }
